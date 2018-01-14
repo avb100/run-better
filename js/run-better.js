@@ -3,10 +3,15 @@ function planRace() {
     $("#calculator-results").children("tr").remove();
 	
 	var secondsPerMile = ($("#race-result-slider").val()) / $("#race-result-distance").val();
+	var secondsPerKilometer = ($("#race-result-slider").val()) / $("#race-result-distance").val() / 1.60934;
 	
 	for (i=1;i<=Math.floor( $("#race-result-distance").val() );i++) {
-		var node = "<tr><td>" + i + "</td><td>" + shortTimeFormat( secondsPerMile*i ) + "</td></tr>";
-		$("#calculator-results").append(node);
+		for (j=Math.ceil((i-1)*1.60934;j<=Math.floor(i*1.60934);j++) {
+			var kilometerRow = "<tr><td colspan=\"2\"></td><td>" + j + "</td><td>" + shortTimeFormat( secondsPerKilometer*j ) + "</td>";
+			$("#calculator-results").append(kilometerRow);
+		}
+		var mileRow = "<tr><td>" + i + "</td><td>" + shortTimeFormat( secondsPerMile*i ) + "</td><td colspan=\"2\"></td></tr>";
+		$("#calculator-results").append(mileRow);
 	}
 	if ( $("#race-result-distance").val() > Math.floor($("#race-result-distance").val()) ) {
 		var node = "<tr><td>" + $("#race-result-distance").val() + "</td><td>" + shortTimeFormat( secondsPerMile*$("#race-result-distance").val() ) + "</td></tr>";
