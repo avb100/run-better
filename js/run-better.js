@@ -1,10 +1,88 @@
 function planRace() {
-	var markup = "<tr><td>Test</td><td>Testing</td></tr>";
-    $("#calculator-results").append(markup);
+	//Accepts distance in meters and pace in seconds per mile
+    $("#calculator-results").children("tr").remove();
+	
+	var secondsPerMile = ($("#race-result-slider").val()) / $("#race-result-distance").val();
+	
+	for (i=1;i<=Math.floor( $("#race-result-distance").val() );i++) {
+		var node = "<tr><td>" + i + "</td><td>" + shortTimeFormat( secondsPerMile*i ) + "</td></tr>";
+		$("#calculator-results").append(node);
+	}
+	if ( $("#race-result-distance").val() > Math.floor($("#race-result-distance").val()) ) {
+		var node = "<tr><td>" + $("#race-result-distance").val() + "</td><td>" + shortTimeFormat( secondsPerMile*$("#race-result-distance").val() ) + "</td></tr>";
+		$("#calculator-results").append(node);
+	}
 }
+
+function percentMax(minutes) {
+	return 0.8 + 0.1894393 * Math.pow(Math.E, -0.012778*minutes) + 0.2989558 * Math.pow(Math.E, -0.1932605*minutes);
+}
+
+function vo2(velocity) {
+	return -4.60 + 0.182258 * velocity + 0.000104 * Math.pow(velocity, 2);
+}
+
+function vo2max(seconds, secondsPerMile) {
+	var velocity = parseFloat(secondsPerMile)*1609.344;
+	var minutes = parseFloat(seconds)/60.0;
+	return vo2(velocity) / percentMax(minutes);
+}
+
+function shortTimeFormat(inputSeconds) {
+		var readout = "";
+		
+		var hours = Math.floor( inputSeconds / 3600 );
+		var minutes = Math.floor( (inputSeconds % 3600) / 60);
+		var seconds = Math.floor( inputSeconds % 60 );
+		
+		if (hours>0) {
+			readout += hours + ":";
+		}
+		if (minutes>=0) {
+			readout += (hours>0 && minutes<10 ? "0" : "") + minutes + ":";
+		}
+		readout += (seconds<10 ? "0" : "") + seconds;
+		return readout;
+}
+
+function longTimeFormat(inputSeconds) {
+		var readout = "";
+		
+		var hours = Math.floor( inputSeconds / 3600 );
+		var minutes = Math.floor( (inputSeconds % 3600) / 60);
+		var seconds = Math.round( inputSeconds % 60 );
+		
+		if (hours>0) {
+			readout += hours + " hour" + (hours>1 ? "s" : "" ) + ", ";
+		}
+		if (minutes>0) {
+			readout += minutes + " minute" + (minutes>1 ? "s" : "") + ", ";
+		}
+		readout += seconds + " second" + (seconds!=1 ? "s" : "");
+		return readout;
+}
+
+$("#race-result-distance").change(
+	function () {
+		var oldMin = $("#race-result-slider").attr("min");
+		var oldMax = $("#race-result-slider").attr("max");
+		var oldVal = $("#race-result-slider").val();
+		
+		var sliderPercent = (oldVal-oldMin) / (oldMax-oldMin);
+		
+		var newMin = Math.floor( 220 * $("#race-result-distance").val() );
+		var newMax = Math.ceil( 1080 * $("#race-result-distance").val() );
+		
+		$("#race-result-slider").attr("min", newMin );
+		$("#race-result-slider").attr("max", newMax );
+		
+		$("#race-result-slider").val( sliderPercent * (newMax-newMin) + newMin );
+		$("#race-result-slider").trigger( "input" );
+	}
+);
 
 $("#race-result-slider").on(
 	"input", function() {
-		$("#race-result-display").text( Math.floor( $("#race-result-slider").val()/60 )+" minutes, "+$("#race-result-slider").val()%60 + " seconds" );
+		$("#race-result-display").text( longTimeFormat( $("#race-result-slider").val() ) );
 	}
 );

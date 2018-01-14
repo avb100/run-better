@@ -14,7 +14,8 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/scrolling-nav.css" rel="stylesheet">
+    <link href="css/run-better.css" rel="stylesheet">
+	<link href="css/scrolling-nav.css" rel="stylesheet">
 
 	<!-- Favicon -->
 	<link href="favicon.ico" rel="icon" type="image/x-icon">
@@ -59,7 +60,7 @@
         <div class="row">
           <div class="col-lg-8 mx-auto">
             <h2>About</h2>
-            <p class="lead">This is a hobby project to help me get familiar with Bootstrap and JavaScript while mixing my passions for running and math into something only nerds who run will appreciate.</p>
+            <p class="lead">This is a hobby project to help me get familiar with Bootstrap, jQuery and JavaScript while mixing my passions for running and math into something only nerds who run will appreciate.</p>
             </div>
         </div>
       </div>
@@ -74,12 +75,12 @@
 			<form>
 			  <div>Race Distance: <select id="race-result-distance">
 				<option value="3.109">5K</option>
-				<option value="26.22">Marathon</option>
+				<option value="26.219">Marathon</option>
 			  </select></div>
 			  
-			  <div>Race Result: <input id="race-result-slider" type="range" min="720" max="3600" step="1" /></div>
+			  <div>Race Result: <span id="race-result-display">Please use the slider below to enter your time.</span></div>
 			  
-			  <div>Time: <span id="race-result-display">Please use the slider above to enter your time.</span></div>
+			  <div><input id="race-result-slider" type="range" min="720" max="3600" step="1" /></div>
 			  
 			  <button type="button" onclick="planRace()">Do Maths!</button>
 			<hr />
