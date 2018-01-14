@@ -16,7 +16,7 @@ function planRace() {
 		$("#calculator-results").append(mileRow);
 	}
 	if ( $("#race-result-distance").val() > Math.floor($("#race-result-distance").val()) ) {
-		var lastRow = "<tr><th>" + ($("#race-result-distance").val()).toFixed(2) + "</th>";
+		var lastRow = "<tr><th>" + ($("#race-result-distance").val()).parseFloat().toFixed(2) + "</th>";
         lastRow += "<th>" + shortTimeFormat( $("#race-result-slider").val() ) + "</th>";
         lastRow += "<th>" + ($("#race-result-distance").val()*1.60934).toFixed(2) + "</th>";
         lastRow += "<th>" + shortTimeFormat( $("#race-result-slider").val() ) + "</th></tr>";
