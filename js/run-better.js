@@ -7,10 +7,12 @@ function planRace() {
 	
 	for (i=1;i<=Math.floor( $("#race-result-distance").val() );i++) {
 		for (j=Math.ceil((i-1)*1.60934);j<=Math.floor(i*1.60934);j++) {
-			var kilometerRow = "<tr><td colspan=\"2\"></td><td>" + j + "</td><td>" + shortTimeFormat( secondsPerKilometer*j ) + "</td>";
-			$("#calculator-results").append(kilometerRow);
+			var kilometerRow = "<tr><td>" + (j/1.60934).toFixed(2) + "</td><td></td><td>" + j + "</td><td>" + shortTimeFormat( secondsPerKilometer*j ) + "</td>";
+			if (j>0) {
+				$("#calculator-results").append(kilometerRow);
+			}
 		}
-		var mileRow = "<tr><td>" + i + "</td><td>" + shortTimeFormat( secondsPerMile*i ) + "</td><td colspan=\"2\"></td></tr>";
+		var mileRow = "<tr><td>" + i + "</td><td>" + shortTimeFormat( secondsPerMile*i ) + "</td><td>" + (i*1.60934).toFixed(2) + "</td></tr>";
 		$("#calculator-results").append(mileRow);
 	}
 	if ( $("#race-result-distance").val() > Math.floor($("#race-result-distance").val()) ) {
