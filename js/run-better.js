@@ -12,7 +12,7 @@ function planRace() {
 				$("#calculator-results").append(kilometerRow);
 			}
 		}
-		var mileRow = "<tr><td>" + i + "</td><td>" + shortTimeFormat( secondsPerMile*i ) + "</td><td>" + (i*1.60934).toFixed(2) + "</td></tr>";
+		var mileRow = "<tr><td>" + i + "</td><td>" + shortTimeFormat( secondsPerMile*i ) + "</td><td>" + (i*1.60934).toFixed(2) + "</td><td></td></tr>";
 		$("#calculator-results").append(mileRow);
 	}
 	if ( $("#race-result-distance").val() > Math.floor($("#race-result-distance").val()) ) {
