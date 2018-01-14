@@ -6,7 +6,7 @@ function planRace() {
 	var secondsPerKilometer = ($("#race-result-slider").val()) / $("#race-result-distance").val() / 1.60934;
 	
 	for (i=1;i<=Math.floor( $("#race-result-distance").val() );i++) {
-		for (j=Math.ceil((i-1)*1.60934;j<=Math.floor(i*1.60934);j++) {
+		for (j=Math.ceil((i-1)*1.60934);j<=Math.floor(i*1.60934);j++) {
 			var kilometerRow = "<tr><td colspan=\"2\"></td><td>" + j + "</td><td>" + shortTimeFormat( secondsPerKilometer*j ) + "</td>";
 			$("#calculator-results").append(kilometerRow);
 		}
