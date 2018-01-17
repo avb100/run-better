@@ -25,16 +25,18 @@ function planRace() {
 }
 
 function percentMax(minutes) {
-	return 0.8 + 0.1894393 * Math.pow(Math.E, -0.012778*minutes) + 0.2989558 * Math.pow(Math.E, -0.1932605*minutes);
+	return 0.2989558 * Math.pow(Math.E, -0.1932605*minutes) + 0.1894393 * Math.pow(Math.E, -0.012778*minutes) + 0.8;
 }
 
 function vo2(velocity) {
-	return -4.60 + 0.182258 * velocity + 0.000104 * Math.pow(velocity, 2);
+	return 0.000104 * Math.pow(velocity, 2) + 0.182258 * velocity - 4.60;
 }
 
-function vo2max(seconds, secondsPerMile) {
-	var velocity = parseFloat(secondsPerMile)*1609.344;
+function vo2max(seconds, miles) {
 	var minutes = parseFloat(seconds)/60.0;
+	
+	var velocity = miles * 1609.344 / minutes;
+	
 	return vo2(velocity) / percentMax(minutes);
 }
 
@@ -93,6 +95,12 @@ $("#race-result-distance").change(
 
 $("#race-result-slider").on(
 	"input", function() {
+		//Show slider value in text
 		$("#race-result-display").text( longTimeFormat( $("#race-result-slider").val() ) );
+		
+		//Calculate VO2 Max of performance
+		var seconds = $("#race-result-slider").val();
+		var miles = $("#race-result-distance").val();
+		$("#vo2-max").text( vo2max( seconds, miles ).toFixed(2) );
 	}
 );
