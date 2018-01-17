@@ -76,6 +76,7 @@ function longTimeFormat(inputSeconds) {
 
 $("#race-result-distance").change(
 	function () {
+		//Adjust slider, but keep marker in the same place, relative to new distance.
 		var oldMin = $("#race-result-slider").attr("min");
 		var oldMax = $("#race-result-slider").attr("max");
 		var oldVal = $("#race-result-slider").val();
@@ -89,18 +90,23 @@ $("#race-result-distance").change(
 		$("#race-result-slider").attr("max", newMax );
 		
 		$("#race-result-slider").val( sliderPercent * (newMax-newMin) + newMin );
+		
+		//Recalculate everything
 		$("#race-result-slider").trigger( "input" );
 	}
 );
 
 $("#race-result-slider").on(
 	"input", function() {
-		//Show slider value in text
+		//Show slider value in text as Race Result
 		$("#race-result-display").text( longTimeFormat( $("#race-result-slider").val() ) );
 		
 		//Calculate VO2 Max of performance
 		var seconds = $("#race-result-slider").val();
 		var miles = $("#race-result-distance").val();
 		$("#vo2-max").text( vo2max( seconds, miles ).toFixed(2) );
+		
+		//Complete pace chart
+		planRace();
 	}
 );
