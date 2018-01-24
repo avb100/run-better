@@ -108,8 +108,11 @@ $("#race-result-slider").on(
 		//Calculate VO2 Max of performance
 		$("#vo2-max").text( vo2max( seconds, miles ).toFixed(2) );
 
-    //Calculate pace of performance
+    //Calculate pace of performance in minutes per mile
     $("#pace").text( shortTimeFormat(seconds/miles) );
+
+    //Calculate pace of performance in miles per hour
+    $("#pace-mph").text( (miles/(seconds/3600)).toFixed(2) );
 
 		//Complete pace chart
 		planRace();
