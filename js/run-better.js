@@ -148,7 +148,28 @@ $("#race-result-slider").on(
 		$("#race-result-display").text( longTimeFormat( seconds ) );
 
 		//Calculate VO2 Max of performance
-		$("#vo2-max").text( vo2max( seconds, miles ).toFixed(2) );
+    var vdot = vo2max( seconds, miles ).toFixed(2);
+    var category = "Casual";
+    if (vdot>=30) {
+      category = "Beginner";
+    }
+    if (vdot>=45) {
+      category = "Intermediate";
+    }
+    if (vdot>=50) {
+      category = "Advanced";
+    }
+    if (vdot>=56) {
+      category = "Sub Elite";
+    }
+    if (vdot>=65) {
+      category = "Elite";
+    }
+    if (vdot>=80) {
+      category = "World Class";
+    }
+		$("#vo2-max").text( vdot );
+    $("#category").text( category );
 
     //Calculate pace of performance in minutes per mile
     $("#pace").text( shortTimeFormat(seconds/miles) );
